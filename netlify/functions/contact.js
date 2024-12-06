@@ -42,7 +42,7 @@ exports.handler = async (event) => {
 
     // Define the email parameters
     const msg = {
-      to: ['blake.munro@dcmail.ca'], // Recipients
+      to: ['blake.munro@dcmail.ca', 'blakemunro17@gmail.com'], // Recipients
       from: 'blake.munro@dcmail.ca', // Verified email adress from sendgrid
       subject: emailSubject,
       html: emailContent,

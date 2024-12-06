@@ -15,6 +15,7 @@ To run this website you must first follow a few short steps.
 2. Run 'npm install @11ty/eleventy' to install eleventy.
 3. Run 'npm install sass'
 4. Run 'npm install dotenv'
+5. Run 'npm install --save @sendgrid/mail'
 
 # IMPORTANT DISCLAIMER
 blog.md, blogPost.md and apple.md require an access token and spaceid before content can be fetched from Contentful. These are stored in a .env file which. For security this file has been removed from this projects code. The performance of these pages will be impacted.
