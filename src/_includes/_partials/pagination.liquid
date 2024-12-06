@@ -1,0 +1,19 @@
+<nav> 
+  <ul class="pagination justify-content-center">
+    {%- if pagination.href.previous %}
+      <li><a href="{{ pagination.href.previous }}">Previous</a></li>
+    {%- endif %}
+    {%- for pageEntry in pagination.pages %}
+      <li class="{% if pagination.pageNumber == forloop.index0 %}active{% endif %}">
+        <a href="{{ pagination.hrefs[forloop.index0] }}" 
+          {% if pagination.pageNumber == forloop.index0 %} aria-current="page"{% endif %}>
+          Page {{ forloop.index }}
+        </a>
+      </li>
+    {%- endfor %}
+    {%- if pagination.href.next %}
+      <li><a href="{{ pagination.href.next }}">Next</a></li>
+    {%- endif %}
+  </ul>
+</nav>
+

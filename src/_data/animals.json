@@ -1,0 +1,101 @@
+[
+  {
+    "id": 30,
+    "name": "Madge",
+    "breed": "Marmot, yellow-bellied",
+    "legs": 97,
+    "eyes": 3,
+    "sound": "Water",
+    "image": "/img/dog.png"
+  },
+  {
+    "id": 31,
+    "name": "Scotti",
+    "breed": "Lapwing, southern",
+    "legs": 90,
+    "eyes": 15,
+    "sound": "ALUMINUM ZIRCONIUM TETRACHLOROHYDREX GLY",
+    "image": "/img/bird.png"
+  },
+  {
+    "id": 32,
+    "name": "Joellyn",
+    "breed": "Jackal, silver-backed",
+    "legs": 4,
+    "eyes": 1,
+    "sound": "Oxymetazoline Hydrochloride",
+    "image": "/img/dog.png"
+  },
+  {
+    "id": 33,
+    "name": "Nealon",
+    "breed": "Wallaby, whip-tailed",
+    "legs": 100,
+    "eyes": 79,
+    "sound": "GLYCERIN, DIMETHICONE",
+    "image": "/img/cat.png"
+  },
+  {
+    "id": 34,
+    "name": "Waylen",
+    "breed": "Lion, african",
+    "legs": 27,
+    "eyes": 21,
+    "sound": "AVOBENZONE, HOMOSALATE, OCTOCRYLENE",
+    "image": "/img/dog.png"
+  },
+  {
+    "id": 35,
+    "name": "Sheelagh",
+    "breed": "Ring-tailed coatimundi",
+    "legs": 43,
+    "eyes": 93,
+    "sound": "methotrexate",
+    "image": "/img/cat.png"
+  },
+  {
+    "id": 36,
+    "name": "Jania",
+    "breed": "Red kangaroo",
+    "legs": 86,
+    "eyes": 43,
+    "sound": "Octinoxate, Titanium Dioxide, and Zinc Oxide",
+    "image": "/img/bird.png"
+  },
+  {
+    "id": 37,
+    "name": "Heddie",
+    "breed": "Cormorant, large",
+    "legs": 61,
+    "eyes": 96,
+    "sound": "sertraline hydrochloride",
+    "image": "/img/bird.png"
+  },
+  {
+    "id": 38,
+    "name": "Elenore",
+    "breed": "Eurasian badger",
+    "legs": 97,
+    "eyes": 16,
+    "sound": "Pyrithione Zinc",
+    "image": "/img/dog.png"
+  },
+  {
+    "id": 39,
+    "name": "Devora",
+    "breed": "Dunnart, fat-tailed",
+    "legs": 27,
+    "eyes": 43,
+    "sound": "loperamide HCl",
+    "image": "/img/cat.png"
+  },
+  {
+    "id": 40,
+    "name": "Gonzales",
+    "breed": "Little cormorant",
+    "legs": 37,
+    "eyes": 15,
+    "sound": "Simethicone",
+    "image": "/img/bird.png"
+  }
+]
