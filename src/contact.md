@@ -6,22 +6,23 @@ title: Contact Us
 # Contact Us
 
 <form id="contact-form">
-  <label for="name">Your Name:</label>
-  <input type="text" id="name" name="name" required>
-
-  <label for="phone">Phone Number:</label>
-  <input type="tel" id="phone" name="phone" required>
-
-  <label for="email">E-mail Address:</label>
-  <input type="email" id="email" name="email" required>
-
-  <label for="subject">Subject:</label>
-  <input type="text" id="subject" name="subject" required>
-
-  <label for="message">Message:</label>
-  <textarea id="message" name="message" rows="4" required></textarea>
-
-  <button type="submit">Submit</button>
+  <div class="form-group">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required>
+  <div class="form-group">
+    <label for="email">E-mail Address:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required>
+  <div class="form-group">
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+  </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <div id="spinner" style="display: none; text-align: center; margin: 20px;">Submitting...</div>
