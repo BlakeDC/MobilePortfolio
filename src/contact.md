@@ -39,40 +39,45 @@ title: Contact Us
 </div>
 
 <script>
-  document.getElementById('contact-form').addEventListener('submit', async (event) => {
+  document.getElementById('contact-form').addEventListener('submit', async function (event) {
     event.preventDefault();
+    const form = event.target;
 
-    // Show spinner, hide form and response message
+    // Show spinner and hide form
     document.getElementById('spinner').style.display = 'block';
-    document.getElementById('contact-form').style.display = 'none';
-    document.getElementById('response-message').style.display = 'none';
+    form.style.display = 'none';
 
-    // Collect form data
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    // Gather form data
+    const formData = {
+      name: document.getElementById('inputName').value,
+      email: document.getElementById('inputEmail').value,
+      phone: document.getElementById('inputPhone').value,
+      subject: document.getElementById('inputSubject').value,
+      message: document.getElementById('inputMessage').value,
+    };
 
     try {
-      // Submit form data to Netlify function
+      // Send data to serverless function
       const response = await fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // Hide spinner and show success message
-        document.getElementById('spinner').style.display = 'none';
+        // Show success message
+        document.getElementById('response-message').textContent = "Thanks for reaching out. We'll get back to you soon!";
         document.getElementById('response-message').style.display = 'block';
       } else {
-        throw new Error('Failed to submit form');
+        throw new Error('Failed to send message');
       }
     } catch (error) {
-      alert('Something went wrong. Please try again.');
-      console.error(error);
-
-      // Reset UI to allow resubmission
+      console.error('Error:', error);
+      document.getElementById('response-message').textContent = 'An error occurred. Please try again later.';
+      document.getElementById('response-message').style.display = 'block';
+    } finally {
+      // Hide spinner
       document.getElementById('spinner').style.display = 'none';
-      document.getElementById('contact-form').style.display = 'block';
     }
   });
 </script>
