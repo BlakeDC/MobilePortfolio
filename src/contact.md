@@ -3,7 +3,7 @@ layout: layouts/base.liquid
 title: Contact Us
 ---
 
-# Contact Us
+<h1 class="text-center">Contact Us</h1>
 
 <div class="form-container">
   <form id="contact-form">
@@ -34,8 +34,10 @@ title: Contact Us
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-  <div id="spinner" style="display: none; text-align: center; margin: 20px;">Submitting...</div>
-  <div id="response-message" style="display: none; text-align: center; margin: 20px; font-size: 1.2em; color: green;">Thanks for reaching out. We'll get back to you soon!</div>
+  <div id="spinner" style="display: none;">
+    <i class="fas fa-spinner fa-spin fa-3x"></i>
+  </div>
+  <div id="response-message" style="display: none;"></div>
 </div>
 
 <script>
@@ -81,3 +83,4 @@ title: Contact Us
     }
   });
 </script>
+
