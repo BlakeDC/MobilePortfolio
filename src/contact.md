@@ -6,23 +6,31 @@ title: Contact Us
 # Contact Us
 
 <form id="contact-form">
-  <div class="form-group">
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" name="name" required>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputName">Your Name</label>
+      <input type="text" class="form-control" id="inputName" placeholder="Name" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputEmail">E-mail</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+    </div>
   </div>
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
-  <div class="form-group">
-    <label for="email">E-mail Address:</label>
-    <input type="email" id="email" name="email" required>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputPhone">Phone Number</label>
+      <input type="tel" class="form-control" id="inputPhone" placeholder="Phone Number" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputSubject">Subject</label>
+      <input type="text" class="form-control" id="inputSubject" placeholder="Subject" required>
+    </div>
   </div>
-    <label for="subject">Subject:</label>
-    <input type="text" id="subject" name="subject" required>
   <div class="form-group">
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="4" required></textarea>
+    <label for="inputMessage">Message</label>
+    <textarea class="form-control" id="inputMessage" rows="4" placeholder="Write your message here..." required></textarea>
   </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <div id="spinner" style="display: none; text-align: center; margin: 20px;">Submitting...</div>
