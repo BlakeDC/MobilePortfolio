@@ -18,7 +18,7 @@ To run this website you must first follow a few short steps.
 5. Run 'npm install --save @sendgrid/mail'
 
 # IMPORTANT DISCLAIMER
-blog.md, blogPost.md and apple.md require an access token and spaceid before content can be fetched from Contentful. These are stored in a .env file. For security this file has been removed from this projects code. The performance of these pages will be impacted if ran localy. This site is intended to be ran on Netlify and environment variables are stored there.
+This site is intended to be ran on Netlify and environment variables are stored there. Attempting to run this site locally will limit functionality.
 
 ## Overview
 

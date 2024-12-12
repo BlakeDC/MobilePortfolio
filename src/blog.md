@@ -1,16 +1,19 @@
 ---
 layout: layouts/base.liquid
-title: Blog
+title: Portfolio
 ---
 
 <!-- Page Title and Introduction -->
-<h1>Blog</h1>
-<p>Welcome to the blog! This page is used to sharing research content, personal interests, and various other topics. From technology trends to personal projects and reflections, this page serves as a platform for learning and exploration. This page is a valuable resource for students and professionals to learn. Happy reading!</p>
+<h1>Portfolio</h1>
+<p>Explore the portfolio! This page showcases various projects categorized by type. Filter and navigate to discover interesting works and achievements. Happy browsing!</p>
+
+<!-- Filter Options -->
+<div id="filters" class="filter-controls"></div>
 
 ---
 
-<!-- Container for dynamically generated blog previews -->
-<div id="blog-previews"></div>
+<!-- Container for dynamically generated portfolio previews -->
+<div id="portfolio-previews"></div>
 
 <!-- Container for pagination controls -->
 <div id="pagination" class="pagination-controls"></div>
@@ -26,88 +29,124 @@ title: Blog
   const spaceId = '{{ contentful.spaceId }}';
   const accessToken = '{{ contentful.accessToken }}';
 
-  // State variables to store fetched posts and pagination state
-  let posts = [];
-  let groupedPosts = [];
+  // State variables
+  let portfolios = [];
+  let filteredPortfolios = [];
+  let groupedPortfolios = [];
   let currentPage = 0;
+  let currentType = 'All';
 
   /**
-   * Fetches blog posts from the Contentful API and initializes the page.
+   * Fetches portfolio entries from Contentful and initializes the page.
    */
-  async function fetchBlogPreviews() {
+  async function fetchPortfolioPreviews() {
     try {
-      // Fetch blog post entries from Contentful
+      // Fetch portfolio entries from Contentful
       const response = await fetch(
-        `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${accessToken}&content_type=blogPost`
+        `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${accessToken}&content_type=portfolio`
       );
       const data = await response.json();
 
-      // Transform API data into a simpler format for use in the page
-      posts = data.items.map(item => ({
-        title: item.fields.title, // Blog post title
-        author: item.fields.author, // Blog post author
-        date: new Date(item.fields.date).toLocaleDateString(), // Format date
-        slug: item.fields.slug, // URL slug for the post
+      // Transform API data
+      portfolios = data.items.map(item => ({
+        title: item.fields.title,
+        type: item.fields.type,
+        slug: item.fields.slug,
       }));
 
-      // Group posts by their formatted date
-      groupedPosts = groupPostsByDate(posts);
-
-      // Initialize pagination and render the first page
-      renderPagination();
-      renderPreviews();
+      // Initialize filters and render the page
+      initializeFilters();
+      applyFilters();
     } catch (error) {
-      // Log any errors that occur during data fetching
-      console.error('Error fetching blog previews:', error);
+      console.error('Error fetching portfolio previews:', error);
     }
   }
 
   /**
-   * Groups blog posts by their publication date.
-   * @param {Array} posts - Array of blog post objects.
-   * @returns {Array} - Array of grouped posts sorted by date.
+   * Initializes the filter options based on portfolio types.
    */
-  function groupPostsByDate(posts) {
-    const grouped = {};
+  function initializeFilters() {
+    const filterContainer = document.getElementById('filters');
 
-    // Organize posts into groups by their date
-    posts.forEach(post => {
-      if (!grouped[post.date]) grouped[post.date] = [];
-      grouped[post.date].push(post);
+    // Get unique types from portfolios
+    const types = ['All', ...new Set(portfolios.map(portfolio => portfolio.type))];
+
+    // Create filter buttons
+    types.forEach(type => {
+      const button = document.createElement('button');
+      button.textContent = type;
+      button.classList.add('filter-button');
+
+      if (type === currentType) button.classList.add('active');
+
+      button.addEventListener('click', () => {
+        currentType = type;
+        applyFilters();
+      });
+
+      filterContainer.appendChild(button);
     });
-
-    // Sort groups by date in descending order and convert to array
-    return Object.entries(grouped)
-      .sort((a, b) => new Date(b[0]) - new Date(a[0]))
-      .map(([date, posts]) => ({ date, posts }));
   }
 
   /**
-   * Renders the blog previews for the current page.
+   * Applies the selected filter and updates the page.
+   */
+  function applyFilters() {
+    // Filter portfolios by type
+    filteredPortfolios = currentType === 'All'
+      ? portfolios
+      : portfolios.filter(portfolio => portfolio.type === currentType);
+
+    // Group portfolios alphabetically by title
+    groupedPortfolios = groupPortfoliosByTitle(filteredPortfolios);
+
+    // Reset pagination
+    currentPage = 0;
+    renderPagination();
+    renderPreviews();
+  }
+
+  /**
+   * Groups portfolios alphabetically by title.
+   * @param {Array} portfolios - Array of portfolio objects.
+   * @returns {Array} - Array of grouped portfolios sorted alphabetically.
+   */
+  function groupPortfoliosByTitle(portfolios) {
+    const grouped = {};
+
+    portfolios.forEach(portfolio => {
+      const letter = portfolio.title.charAt(0).toUpperCase();
+      if (!grouped[letter]) grouped[letter] = [];
+      grouped[letter].push(portfolio);
+    });
+
+    return Object.entries(grouped)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([letter, portfolios]) => ({ letter, portfolios }));
+  }
+
+  /**
+   * Renders the portfolio previews for the current page.
    */
   function renderPreviews() {
-    const container = document.getElementById('blog-previews');
-    
-    // Clear existing content
+    const container = document.getElementById('portfolio-previews');
     container.innerHTML = '';
 
-    // Get the posts for the current page's date group
-    const currentGroup = groupedPosts[currentPage];
+    const currentGroup = groupedPortfolios[currentPage];
     if (currentGroup) {
-      const { date, posts } = currentGroup;
+      const { letter, portfolios } = currentGroup;
 
-      // Add a group header with the date
-      const groupHeader = `<h2>${date}</h2>`;
+      // Add a group header with the letter
+      const groupHeader = `<h2>${letter}</h2>`;
       container.insertAdjacentHTML('beforeend', groupHeader);
 
-      // Add individual post previews
-      posts.forEach(post => {
+      portfolios.forEach(portfolio => {
         const preview = document.createElement('div');
-        preview.classList.add('blog-preview');
+        preview.classList.add('portfolio-preview');
         preview.innerHTML = `
-          <h3>${post.title}</h3>
-          <p><strong>Author:</strong> ${post.author}</p>
-          <a href="/blogPost/?slug=${post.slug}">Read More</a>
+          <h3>${portfolio.title}</h3>
+          <p><strong>Type:</strong> ${portfolio.type}</p>
+          <a href="/portfolio/?slug=${portfolio.slug}">View Details</a>
         `;
         container.appendChild(preview);
       });
@@ -115,18 +154,16 @@ title: Blog
   }
 
   /**
-   * Renders pagination controls, including navigation buttons and date links.
+   * Renders pagination controls.
    */
   function renderPagination() {
     const paginationContainer = document.getElementById('pagination');
-    
-    // Clear existing pagination controls
     paginationContainer.innerHTML = '';
 
     // Create "Previous" button
     const prevButton = document.createElement('button');
     prevButton.textContent = 'Previous';
-    prevButton.disabled = currentPage === 0; // Disable if on the first page
+    prevButton.disabled = currentPage === 0;
     prevButton.addEventListener('click', () => {
       currentPage--;
       renderPreviews();
@@ -134,32 +171,24 @@ title: Blog
     });
     paginationContainer.appendChild(prevButton);
 
-    // Create links for each date group
-    const dateLinksContainer = document.createElement('div');
-    dateLinksContainer.classList.add('date-links');
-
-    groupedPosts.forEach((group, index) => {
-      const dateButton = document.createElement('button');
-      dateButton.textContent = group.date;
-      dateButton.classList.add('date-link');
-      
-      // Highlight the button for the current page
-      if (index === currentPage) dateButton.classList.add('active');
-      
-      dateButton.addEventListener('click', () => {
+    // Create links for each group
+    groupedPortfolios.forEach((group, index) => {
+      const letterButton = document.createElement('button');
+      letterButton.textContent = group.letter;
+      letterButton.classList.add('page-link');
+      if (index === currentPage) letterButton.classList.add('active');
+      letterButton.addEventListener('click', () => {
         currentPage = index;
         renderPreviews();
         renderPagination();
       });
-      dateLinksContainer.appendChild(dateButton);
+      paginationContainer.appendChild(letterButton);
     });
-
-    paginationContainer.appendChild(dateLinksContainer);
 
     // Create "Next" button
     const nextButton = document.createElement('button');
     nextButton.textContent = 'Next';
-    nextButton.disabled = currentPage === groupedPosts.length - 1; // Disable if on the last page
+    nextButton.disabled = currentPage === groupedPortfolios.length - 1;
     nextButton.addEventListener('click', () => {
       currentPage++;
       renderPreviews();
@@ -169,5 +198,5 @@ title: Blog
   }
 
   // Initialize the page once the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', fetchBlogPreviews);
+  document.addEventListener('DOMContentLoaded', fetchPortfolioPreviews);
 </script>
