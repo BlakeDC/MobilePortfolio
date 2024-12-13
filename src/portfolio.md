@@ -28,39 +28,9 @@ title: Portfolio
   const accessToken = '{{ contentful.accessToken }}';
 
   // State variables to store fetched portfolio items and the currently selected type
-  let portfolioItems = [];
+  let portfolios = [];
   let filteredItems = [];
   let selectedType = 'All'; // Default to show all items
-
-  /**
-   * Fetches portfolio items from the Contentful API and initializes the page.
-   */
-  async function fetchPortfolioItems() {
-    try {
-      // Fetch portfolio entries from Contentful
-      const response = await fetch(
-        `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${accessToken}&content_type=portfolio`
-      );
-      const data = await response.json();
-
-      // Transform API data into a simpler format for use on the page
-      portfolioItems = data.items.map(item => ({
-        title: item.fields.title,
-        type: item.fields.type,
-        imageUrl: `https:${item.fields.image.fields.file.url}`,
-        description: item.fields.description,
-        link: item.fields.link,
-      }));
-
-      // Initialize filtered items and render the page
-      filteredItems = portfolioItems;
-      renderFilters();
-      renderPortfolioItems();
-    } catch (error) {
-      console.error('Error fetching portfolio items:', error);
-    }
-  }
-
   
   /**
    * Fetches portfolio entries from Contentful and initializes the page.
@@ -95,7 +65,7 @@ title: Portfolio
     const filterContainer = document.getElementById('portfolio-filters');
 
     // Extract unique types from portfolio items
-    const types = ['All', ...new Set(portfolioItems.map(item => item.type))];
+    const types = ['All', ...new Set(portfolios.map(item => item.type))];
 
     // Render filter buttons
     types.forEach(type => {
@@ -106,7 +76,7 @@ title: Portfolio
 
       button.addEventListener('click', () => {
         selectedType = type;
-        filterPortfolioItems();
+        filterportfolios();
       });
 
       filterContainer.appendChild(button);
@@ -116,12 +86,12 @@ title: Portfolio
   /**
    * Filters portfolio items based on the selected type.
    */
-  function filterPortfolioItems() {
+  function filterportfolios() {
     filteredItems = selectedType === 'All'
-      ? portfolioItems
-      : portfolioItems.filter(item => item.type === selectedType);
+      ? portfolios
+      : portfolios.filter(item => item.type === selectedType);
 
-    renderPortfolioItems();
+    renderportfolios();
     updateActiveFilter();
   }
 
@@ -138,7 +108,7 @@ title: Portfolio
   /**
    * Renders the filtered portfolio items on the page.
    */
-  function renderPortfolioItems() {
+  function renderportfolios() {
     const container = document.getElementById('portfolio-container');
 
     // Clear existing content
@@ -151,13 +121,12 @@ title: Portfolio
       itemElement.innerHTML = `
         <h3>${item.title}</h3>
         <p><strong>Type:</strong> ${item.type}</p>
-        <p>${item.description}</p>
-        <a href="/portfolioPost/?slug=${item.link}">View Details</a>
+        <a href="/portfolioPost/?slug=${item.slug}">Read More</a>
       `;
       container.appendChild(itemElement);
     });
   }
 
   // Initialize the page once the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', fetchPortfolioItems);
+  document.addEventListener('DOMContentLoaded', fetchportfolios);
 </script>
