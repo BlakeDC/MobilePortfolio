@@ -32,34 +32,39 @@ title: Portfolio
   let filteredItems = [];
   let selectedType = 'All'; // Default to show all items
 
-  /**
-   * Fetches portfolio items from the Contentful API and initializes the page.
-   */
-  async function fetchPortfolioItems() {
-    try {
-      // Fetch portfolio entries from Contentful
-      const response = await fetch(
-        `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${accessToken}&content_type=portfolio`
-      );
-      const data = await response.json();
+/**
+ * Fetches portfolio items from the Contentful API and initializes the page.
+ */
+async function fetchPortfolioItems() {
+  try {
+    // Fetch portfolio entries from Contentful
+    const response = await fetch(
+      `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${accessToken}&content_type=portfolio`
+    );
+    const data = await response.json();
 
-      // Transform API data into a simpler format for use on the page
-      portfolioItems = data.items.map(item => ({
-        title: item.fields.title,
-        type: item.fields.type,
-        imageUrl: `https:${item.fields.image.fields.file.url}`,
-        description: item.fields.description,
-        link: item.fields.link,
+    // Transform API data into a simpler format for use on the page
+    portfolioItems = data.items
+      .filter(item => item.fields) // Ensure item has fields
+      .map(item => ({
+        title: item.fields.title || 'Untitled', // Fallback for missing title
+        type: item.fields.type || 'Unknown',   // Fallback for missing type
+        imageUrl: item.fields.image?.fields?.file?.url
+          ? `https:${item.fields.image.fields.file.url}`
+          : '', // Fallback for missing image
+        description: item.fields.description || 'No description provided.', // Fallback for missing description
+        link: item.fields.link || '#',        // Fallback for missing link
       }));
 
-      // Initialize filtered items and render the page
-      filteredItems = portfolioItems;
-      renderFilters();
-      renderPortfolioItems();
-    } catch (error) {
-      console.error('Error fetching portfolio items:', error);
-    }
+    // Initialize filtered items and render the page
+    filteredItems = portfolioItems;
+    renderFilters();
+    renderPortfolioItems();
+  } catch (error) {
+    console.error('Error fetching portfolio items:', error);
   }
+}
+
 
   /**
    * Renders the filter options based on portfolio item types.
