@@ -152,7 +152,7 @@ title: Portfolio
         <h3>${item.title}</h3>
         <p><strong>Type:</strong> ${item.type}</p>
         <p>${item.description}</p>
-        <a href="/portfolioPost/?slug=${portfolio.slug}">View Details</a>
+        <a href="/portfolioPost/?slug=${item.slug}">View Details</a>
       `;
       container.appendChild(itemElement);
     });
