@@ -18,6 +18,7 @@ I’m a third-year Computer Programming and Anylysis student at Durham College w
 This website is my way of combining my technical skills with my love for learning and sharing knowledge. Here, you'll find insights into my projects for INFT-3101-01 - Mobile Development. You'll find a varierty of things from Android Studio, to MIT App Inventor, to Flutter.
 
 Thank you for stopping by, and I hope you enjoy exploring what I’ve built!
+To learn more about me click <a href="/about">Here</a>
 
 ## What You’ll Find
 
