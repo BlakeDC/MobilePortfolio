@@ -58,29 +58,33 @@ title: Contact Us
       message: document.getElementById('inputMessage').value,
     };
 
-    try {
-      // Send data to serverless function
-      const response = await fetch('/.netlify/functions/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      try {
+    // Send data to serverless function
+    const response = await fetch('/.netlify/functions/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-      if (response.ok) {
-        // Show success message
-        document.getElementById('response-message').textContent = "Thanks for reaching out. We'll get back to you soon!";
-        document.getElementById('response-message').style.display = 'block';
-      } else {
-        throw new Error('Failed to send message');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      document.getElementById('response-message').textContent = 'An error occurred. Please try again later.';
+    const result = await response.json();
+
+    if (response.ok) {
+      // Show success message
+      document.getElementById('response-message').textContent = "Thanks for reaching out. We'll get back to you soon!";
       document.getElementById('response-message').style.display = 'block';
-    } finally {
-      // Hide spinner
-      document.getElementById('spinner').style.display = 'none';
+    } else {
+      // Show error message from the server
+      document.getElementById('response-message').textContent = result.message;
+      document.getElementById('response-message').style.display = 'block';
     }
+  } catch (error) {
+    console.error('Error:', error);
+    document.getElementById('response-message').textContent = 'An error occurred. Please try again later.';
+    document.getElementById('response-message').style.display = 'block';
+  } finally {
+    // Hide spinner
+    document.getElementById('spinner').style.display = 'none';
+  }
   });
 </script>
 
