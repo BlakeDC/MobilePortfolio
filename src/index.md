@@ -3,7 +3,7 @@ layout: layouts/base.liquid
 title: Home
 ---
 
-# Welcome to Blakes Awesome Website!
+# Welcome to Blakes Portfolio!
 
 Hi I’m Blake Munro and I’m thrilled to welcome you to my website. This website is a reflection of my passions and projects. Whether you're here to explore the world of programming, or simply learn more about me and my journey, I’ve got something for everyone to enjoy.
 

@@ -13,9 +13,6 @@ title: Portfolio
 <!-- Container for dynamically generated portfolio items -->
 <div id="portfolio-container" class="portfolio-items"></div>
 
-<!-- Container for pagination controls -->
-<div id="pagination" class="pagination-controls"></div>
-
 <!-- Including Contentful SDK for API interaction -->
 <script
   src="https://cdn.jsdelivr.net/npm/contentful@7.0.5/dist/contentful.browser.min.js"
@@ -48,6 +45,9 @@ title: Portfolio
         title: item.fields.title,
         type: item.fields.type,
         slug: item.fields.slug,
+        author: item.fields.author || 'Unknown Author',
+        date: item.fields.date ? new Date(item.fields.date).toLocaleDateString() : 'No Date Provided',
+        description: item.fields.description || 'No description available.',
       }));
 
       // Initialize filtered items and render the page
@@ -122,6 +122,9 @@ title: Portfolio
       itemElement.innerHTML = `
         <h3>${item.title}</h3>
         <p><strong>Type:</strong> ${item.type}</p>
+        <p><strong>Author:</strong> ${item.author}</p>
+        <p><strong>Date:</strong> ${item.date}</p>
+        <p><strong>Description:</strong> ${item.description}</p>
         <a href="/portfolioPost/?slug=${item.slug}">Read More</a>
       `;
       container.appendChild(itemElement);
