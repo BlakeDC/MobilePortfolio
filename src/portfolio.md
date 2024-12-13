@@ -146,7 +146,7 @@ title: Portfolio
         preview.innerHTML = `
           <h3>${portfolio.title}</h3>
           <p><strong>Type:</strong> ${portfolio.type}</p>
-          <a href="/portfolio/?slug=${portfolio.slug}">View Details</a>
+          <a href="/portfolioPost/?slug=${portfolio.slug}">View Details</a>
         `;
         container.appendChild(preview);
       });
