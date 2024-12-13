@@ -22,10 +22,10 @@ To learn more about me click <a href="/about">Here</a>
 
 ## What You’ll Find
 
-- **Apple Index**: Discover a range of unique apples, each with their own characteristics showcasing the power of pagination.
 - **About Me**: Learn more about who I am and what I do. Covers topics like who I am, my career and education, my contact information and more.
-- **Web Development Research**: Find vast information on templating engines, SSG applications, front matter and more!
+- **Portfolio**: Find tons of information on my mobile development Labs, Class Works, and Projects for INFT-3101 - Mobile Development.
+- **Contact**: Using the SendGrid API you can send me an Email. Just fill out a form with your contact information so I can get back to you!
 
 ---
 
-Thank you for visiting, and we hope you enjoy your time exploring our site!
+Thank you for visiting, and I hope you enjoy your time exploring our site!

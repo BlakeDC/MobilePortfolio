@@ -4,7 +4,7 @@ layout: layouts/base.liquid
 ---
 
 # About Me
-##### Disclaimer: Page content generated with partial assistance from ChatGPT. All Code, Content Topics and Structure were written by Blake Munro
+
 ---
 
 Hello! My name is **Blake Munro**, and I am currently a 3rd-year **Computer Programming** student at **Durham College**. I am passionate about technology and software development, and I am proud to be an honor roll student. Throughout my academic journey, I've gained valuable experience in various areas of development, from building websites to working on mainframes, cloud platforms, mobile apps, and even games.
