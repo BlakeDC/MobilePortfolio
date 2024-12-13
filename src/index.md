@@ -5,15 +5,19 @@ title: Home
 
 # Welcome to Blakes Awesome Website!
 
-Welcome to our website! We're thrilled to have you here. Explore our content, learn more about us, and discover the exciting projects we're working on. Whether you're looking for information on fascinating animals, exploring the world of programming, or just browsing, we've got something for everyone.
+Hi I’m Blake Munro and I’m thrilled to welcome you to my website. This website is a reflection of my passions and projects. Whether you're here to explore the world of programming, or simply learn more about me and my journey, I’ve got something for everyone to enjoy.
 
-Feel free to navigate through the pages and dive into the rich content we have prepared for you. Enjoy your stay!
+Feel free to explore everything my site has to offer. You’ll find exciting content that I’ve carefully prepared, whether it’s showcasing my academic projects or highlighting exciting developments in my world. I hope you enjoy your visit as much as I enjoyed creating this website!
 
 ---
 
-## About Us
+## About Me
 
-We are a team of 1 passionate individual dedicated to providing insightful content, from educational programming projects to fun facts about animals. Our mission is to create a platform where learning and exploration come together in an engaging and interactive way.
+I’m a third-year Computer Programming and Anylysis student at Durham College with a deep passion for coding, technology, and creativity. From developing web and mobile applications to exploring cloud computing, I’m constantly looking for ways to create impactful projects. Outside of programming I am a gym enthusiast, a zipline operator, and a party host.
+
+This website is my way of combining my technical skills with my love for learning and sharing knowledge. Here, you'll find insights into my projects for INFT-3101-01 - Mobile Development. You'll find a varierty of things from Android Studio, to MIT App Inventor, to Flutter.
+
+Thank you for stopping by, and I hope you enjoy exploring what I’ve built!
 
 ## What You’ll Find
 
