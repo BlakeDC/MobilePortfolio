@@ -47,7 +47,7 @@ title: Portfolio
       portfolioItems = data.items.map(item => ({
         title: item.fields.title,
         type: item.fields.type,
-        link: item.fields.link,
+        slug: item.fields.slug,
       }));
 
       // Initialize filtered items and render the page
