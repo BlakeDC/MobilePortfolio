@@ -7,13 +7,11 @@ title: Portfolio
 <h1>Portfolio</h1>
 <p>Explore the portfolio! This page showcases various projects categorized by type. Filter and navigate to discover interesting works and achievements. Happy browsing!</p>
 
-<!-- Filter Options -->
-<div id="filters" class="filter-controls"></div>
+<!-- Container for filter buttons -->
+<div id="portfolio-filters" class="portfolio-filters"></div>
 
----
-
-<!-- Container for dynamically generated portfolio previews -->
-<div id="portfolio-previews"></div>
+<!-- Container for dynamically generated portfolio items -->
+<div id="portfolio-container" class="portfolio-items"></div>
 
 <!-- Container for pagination controls -->
 <div id="pagination" class="pagination-controls"></div>
@@ -29,17 +27,15 @@ title: Portfolio
   const spaceId = '{{ contentful.spaceId }}';
   const accessToken = '{{ contentful.accessToken }}';
 
-  // State variables
-  let portfolios = [];
-  let filteredPortfolios = [];
-  let groupedPortfolios = [];
-  let currentPage = 0;
-  let currentType = 'All';
+  // State variables to store fetched portfolio items and the currently selected type
+  let portfolioItems = [];
+  let filteredItems = [];
+  let selectedType = 'All'; // Default to show all items
 
   /**
-   * Fetches portfolio entries from Contentful and initializes the page.
+   * Fetches portfolio items from the Contentful API and initializes the page.
    */
-  async function fetchPortfolioPreviews() {
+  async function fetchPortfolioItems() {
     try {
       // Fetch portfolio entries from Contentful
       const response = await fetch(
@@ -47,41 +43,43 @@ title: Portfolio
       );
       const data = await response.json();
 
-      // Transform API data
-      portfolios = data.items.map(item => ({
+      // Transform API data into a simpler format for use on the page
+      portfolioItems = data.items.map(item => ({
         title: item.fields.title,
         type: item.fields.type,
-        slug: item.fields.slug,
+        imageUrl: `https:${item.fields.image.fields.file.url}`,
+        description: item.fields.description,
+        link: item.fields.link,
       }));
 
-      // Initialize filters and render the page
-      initializeFilters();
-      applyFilters();
+      // Initialize filtered items and render the page
+      filteredItems = portfolioItems;
+      renderFilters();
+      renderPortfolioItems();
     } catch (error) {
-      console.error('Error fetching portfolio previews:', error);
+      console.error('Error fetching portfolio items:', error);
     }
   }
 
   /**
-   * Initializes the filter options based on portfolio types.
+   * Renders the filter options based on portfolio item types.
    */
-  function initializeFilters() {
-    const filterContainer = document.getElementById('filters');
+  function renderFilters() {
+    const filterContainer = document.getElementById('portfolio-filters');
 
-    // Get unique types from portfolios
-    const types = ['All', ...new Set(portfolios.map(portfolio => portfolio.type))];
+    // Extract unique types from portfolio items
+    const types = ['All', ...new Set(portfolioItems.map(item => item.type))];
 
-    // Create filter buttons
+    // Render filter buttons
     types.forEach(type => {
       const button = document.createElement('button');
       button.textContent = type;
       button.classList.add('filter-button');
-
-      if (type === currentType) button.classList.add('active');
+      if (type === selectedType) button.classList.add('active'); // Highlight selected filter
 
       button.addEventListener('click', () => {
-        currentType = type;
-        applyFilters();
+        selectedType = type;
+        filterPortfolioItems();
       });
 
       filterContainer.appendChild(button);
@@ -89,114 +87,51 @@ title: Portfolio
   }
 
   /**
-   * Applies the selected filter and updates the page.
+   * Filters portfolio items based on the selected type.
    */
-  function applyFilters() {
-    // Filter portfolios by type
-    filteredPortfolios = currentType === 'All'
-      ? portfolios
-      : portfolios.filter(portfolio => portfolio.type === currentType);
+  function filterPortfolioItems() {
+    filteredItems = selectedType === 'All'
+      ? portfolioItems
+      : portfolioItems.filter(item => item.type === selectedType);
 
-    // Group portfolios alphabetically by title
-    groupedPortfolios = groupPortfoliosByTitle(filteredPortfolios);
-
-    // Reset pagination
-    currentPage = 0;
-    renderPagination();
-    renderPreviews();
+    renderPortfolioItems();
+    updateActiveFilter();
   }
 
   /**
-   * Groups portfolios alphabetically by title.
-   * @param {Array} portfolios - Array of portfolio objects.
-   * @returns {Array} - Array of grouped portfolios sorted alphabetically.
+   * Updates the active filter button styling.
    */
-  function groupPortfoliosByTitle(portfolios) {
-    const grouped = {};
-
-    portfolios.forEach(portfolio => {
-      const letter = portfolio.title.charAt(0).toUpperCase();
-      if (!grouped[letter]) grouped[letter] = [];
-      grouped[letter].push(portfolio);
+  function updateActiveFilter() {
+    const buttons = document.querySelectorAll('.filter-button');
+    buttons.forEach(button => {
+      button.classList.toggle('active', button.textContent === selectedType);
     });
-
-    return Object.entries(grouped)
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([letter, portfolios]) => ({ letter, portfolios }));
   }
 
   /**
-   * Renders the portfolio previews for the current page.
+   * Renders the filtered portfolio items on the page.
    */
-  function renderPreviews() {
-    const container = document.getElementById('portfolio-previews');
+  function renderPortfolioItems() {
+    const container = document.getElementById('portfolio-container');
+
+    // Clear existing content
     container.innerHTML = '';
 
-    const currentGroup = groupedPortfolios[currentPage];
-    if (currentGroup) {
-      const { letter, portfolios } = currentGroup;
-
-      // Add a group header with the letter
-      const groupHeader = `<h2>${letter}</h2>`;
-      container.insertAdjacentHTML('beforeend', groupHeader);
-
-      portfolios.forEach(portfolio => {
-        const preview = document.createElement('div');
-        preview.classList.add('portfolio-preview');
-        preview.innerHTML = `
-          <h3>${portfolio.title}</h3>
-          <p><strong>Type:</strong> ${portfolio.type}</p>
-          <a href="/portfolioPost/?slug=${portfolio.slug}">View Details</a>
-        `;
-        container.appendChild(preview);
-      });
-    }
-  }
-
-  /**
-   * Renders pagination controls.
-   */
-  function renderPagination() {
-    const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = '';
-
-    // Create "Previous" button
-    const prevButton = document.createElement('button');
-    prevButton.textContent = 'Previous';
-    prevButton.disabled = currentPage === 0;
-    prevButton.addEventListener('click', () => {
-      currentPage--;
-      renderPreviews();
-      renderPagination();
+    // Render each filtered portfolio item
+    filteredItems.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.classList.add('portfolio-item');
+      itemElement.innerHTML = `
+        <img src="${item.imageUrl}" alt="${item.title}" />
+        <h3>${item.title}</h3>
+        <p><strong>Type:</strong> ${item.type}</p>
+        <p>${item.description}</p>
+        <a href="${item.link}" target="_blank">View More</a>
+      `;
+      container.appendChild(itemElement);
     });
-    paginationContainer.appendChild(prevButton);
-
-    // Create links for each group
-    groupedPortfolios.forEach((group, index) => {
-      const letterButton = document.createElement('button');
-      letterButton.textContent = group.letter;
-      letterButton.classList.add('page-link');
-      if (index === currentPage) letterButton.classList.add('active');
-      letterButton.addEventListener('click', () => {
-        currentPage = index;
-        renderPreviews();
-        renderPagination();
-      });
-      paginationContainer.appendChild(letterButton);
-    });
-
-    // Create "Next" button
-    const nextButton = document.createElement('button');
-    nextButton.textContent = 'Next';
-    nextButton.disabled = currentPage === groupedPortfolios.length - 1;
-    nextButton.addEventListener('click', () => {
-      currentPage++;
-      renderPreviews();
-      renderPagination();
-    });
-    paginationContainer.appendChild(nextButton);
   }
 
   // Initialize the page once the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', fetchPortfolioPreviews);
+  document.addEventListener('DOMContentLoaded', fetchPortfolioItems);
 </script>
