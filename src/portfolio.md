@@ -28,14 +28,14 @@ title: Portfolio
   const accessToken = '{{ contentful.accessToken }}';
 
   // State variables to store fetched portfolio items and the currently selected type
-  let portfolios = [];
+  let portfolioItems = [];
   let filteredItems = [];
   let selectedType = 'All'; // Default to show all items
-  
+
   /**
-   * Fetches portfolio entries from Contentful and initializes the page.
+   * Fetches portfolio items from the Contentful API and initializes the page.
    */
-  async function fetchPortfolios() {
+  async function fetchPortfolioItems() {
     try {
       // Fetch portfolio entries from Contentful
       const response = await fetch(
@@ -43,18 +43,19 @@ title: Portfolio
       );
       const data = await response.json();
 
-      // Transform API data
-      portfolios = data.items.map(item => ({
+      // Transform API data into a simpler format for use on the page
+      portfolioItems = data.items.map(item => ({
         title: item.fields.title,
         type: item.fields.type,
-        slug: item.fields.slug,
+        link: item.fields.link,
       }));
 
-      // Initialize filters and render the page
-      initializeFilters();
-      applyFilters();
+      // Initialize filtered items and render the page
+      filteredItems = portfolioItems;
+      renderFilters();
+      renderPortfolioItems();
     } catch (error) {
-      console.error('Error fetching portfolio previews:', error);
+      console.error('Error fetching portfolio items:', error);
     }
   }
 
@@ -65,7 +66,7 @@ title: Portfolio
     const filterContainer = document.getElementById('portfolio-filters');
 
     // Extract unique types from portfolio items
-    const types = ['All', ...new Set(portfolios.map(item => item.type))];
+    const types = ['All', ...new Set(portfolioItems.map(item => item.type))];
 
     // Render filter buttons
     types.forEach(type => {
@@ -76,7 +77,7 @@ title: Portfolio
 
       button.addEventListener('click', () => {
         selectedType = type;
-        filterportfolios();
+        filterPortfolioItems();
       });
 
       filterContainer.appendChild(button);
@@ -86,12 +87,12 @@ title: Portfolio
   /**
    * Filters portfolio items based on the selected type.
    */
-  function filterportfolios() {
+  function filterPortfolioItems() {
     filteredItems = selectedType === 'All'
-      ? portfolios
-      : portfolios.filter(item => item.type === selectedType);
+      ? portfolioItems
+      : portfolioItems.filter(item => item.type === selectedType);
 
-    renderportfolios();
+    renderPortfolioItems();
     updateActiveFilter();
   }
 
@@ -108,7 +109,7 @@ title: Portfolio
   /**
    * Renders the filtered portfolio items on the page.
    */
-  function renderportfolios() {
+  function renderPortfolioItems() {
     const container = document.getElementById('portfolio-container');
 
     // Clear existing content
@@ -128,5 +129,5 @@ title: Portfolio
   }
 
   // Initialize the page once the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', fetchPortfolios);
+  document.addEventListener('DOMContentLoaded', fetchPortfolioItems);
 </script>
