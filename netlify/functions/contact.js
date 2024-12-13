@@ -17,11 +17,29 @@ exports.handler = async (event) => {
     const data = JSON.parse(event.body);
     const { name, phone, email, subject, message } = data;
 
-    // Validate the input
+    // Validate the input fields
     if (!name || !phone || !email || !subject || !message) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'All fields are required' }),
+      };
+    }
+
+    // Validate email format using regex
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailPattern.test(email)) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Invalid email format' }),
+      };
+    }
+
+    // Validate phone number (must be numeric)
+    const phonePattern = /^[0-9]+$/;
+    if (!phonePattern.test(phone)) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Phone number must be numeric' }),
       };
     }
 
@@ -43,7 +61,7 @@ exports.handler = async (event) => {
     // Define the email parameters
     const msg = {
       to: ['blake.munro@dcmail.ca', 'blakemunro17@gmail.com'], // Recipients
-      from: 'blake.munro@dcmail.ca', // Verified email adress from sendgrid
+      from: 'blake.munro@dcmail.ca', // Verified email address from SendGrid
       subject: emailSubject,
       html: emailContent,
     };

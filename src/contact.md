@@ -42,23 +42,39 @@ title: Contact Us
 
 <script>
   document.getElementById('contact-form').addEventListener('submit', async function (event) {
-    event.preventDefault();
-    const form = event.target;
+  event.preventDefault();
+  const form = event.target;
 
-    // Show spinner and hide form
-    document.getElementById('spinner').style.display = 'block';
-    form.style.display = 'none';
+  // Gather form data
+  const formData = {
+    name: document.getElementById('inputName').value,
+    email: document.getElementById('inputEmail').value,
+    phone: document.getElementById('inputPhone').value,
+    subject: document.getElementById('inputSubject').value,
+    message: document.getElementById('inputMessage').value,
+  };
 
-    // Gather form data
-    const formData = {
-      name: document.getElementById('inputName').value,
-      email: document.getElementById('inputEmail').value,
-      phone: document.getElementById('inputPhone').value,
-      subject: document.getElementById('inputSubject').value,
-      message: document.getElementById('inputMessage').value,
-    };
+  // Validate email format
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (!emailPattern.test(formData.email)) {
+    document.getElementById('response-message').textContent = 'Invalid email format';
+    document.getElementById('response-message').style.display = 'block';
+    return;
+  }
 
-      try {
+  // Validate phone number (must be numeric)
+  const phonePattern = /^[0-9]+$/;
+  if (!phonePattern.test(formData.phone)) {
+    document.getElementById('response-message').textContent = 'Phone number must be numeric';
+    document.getElementById('response-message').style.display = 'block';
+    return;
+  }
+
+  // Show spinner and hide form
+  document.getElementById('spinner').style.display = 'block';
+  form.style.display = 'none';
+
+  try {
     // Send data to serverless function
     const response = await fetch('/.netlify/functions/contact', {
       method: 'POST',
@@ -85,6 +101,7 @@ title: Contact Us
     // Hide spinner
     document.getElementById('spinner').style.display = 'none';
   }
-  });
+});
+
 </script>
 
