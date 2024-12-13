@@ -35,7 +35,7 @@ title: Portfolio
   /**
    * Fetches portfolio entries from Contentful and initializes the page.
    */
-  async function fetchPortfolioPreviews() {
+  async function fetchPortfolios() {
     try {
       // Fetch portfolio entries from Contentful
       const response = await fetch(
@@ -128,5 +128,5 @@ title: Portfolio
   }
 
   // Initialize the page once the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', fetchportfolios);
+  document.addEventListener('DOMContentLoaded', fetchPortfolios);
 </script>
