@@ -12,12 +12,6 @@ title: Portfolio Post
   <div id="portfolio-post" class="portfolio-content">
     <p>No portfolio post specified.</p> <!-- Default message if no portfolio post is specified -->
   </div>
-
-  <!-- Related Portfolio Posts -->
-  <div id="related-portfolio-posts" class="related-posts">
-    <h3>Related Projects</h3>
-    <!-- Portfolio posts will be rendered here -->
-  </div>
 </div>
 
 <!-- Contentful SDK -->
