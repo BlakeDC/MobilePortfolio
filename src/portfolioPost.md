@@ -78,7 +78,7 @@ title: Portfolio Post
             const asset = data.includes.Asset.find((asset) => asset.sys.id === assetId);
             if (asset && asset.fields && asset.fields.file) {
               const assetUrl = `https:${asset.fields.file.url}`;
-              return `<img src="${assetUrl}" alt="${asset.fields.title || 'Embedded Image'}" style="width: 100%; max-width: 600px;" />`;
+              return `<img src="${assetUrl}" alt="${asset.fields.title || 'Embedded Image'}" style="width: 100%; max-width: 600px; max-height: 400px; object-fit: contain;" />`;
             }
             return ''; // Return empty string if the asset is not found
           },
