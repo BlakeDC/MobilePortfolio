@@ -4,18 +4,20 @@ title: Portfolio Post
 ---
 
 <!-- Page Title -->
-<h1>Portfolio Post</h1>
+<h1 class="portfolio-title">Portfolio Post</h1>
 
-<!-- Container for the portfolio post content -->
-<div id="portfolio-post">
-  <p></p> <!-- Default message if no portfolio post is specified -->
-</div>
+<!-- Main Container -->
+<div id="portfolio-container">
+  <!-- Container for the portfolio post content -->
+  <div id="portfolio-post" class="portfolio-content">
+    <p>No portfolio post specified.</p> <!-- Default message if no portfolio post is specified -->
+  </div>
 
----
-
-<!-- Placeholder for additional related portfolio posts or content -->
-<div id="portfolio-posts">
-  <!-- Portfolio posts will be rendered here -->
+  <!-- Related Portfolio Posts -->
+  <div id="related-portfolio-posts" class="related-posts">
+    <h3>Related Projects</h3>
+    <!-- Portfolio posts will be rendered here -->
+  </div>
 </div>
 
 <!-- Contentful SDK -->
@@ -78,7 +80,7 @@ title: Portfolio Post
             const asset = data.includes.Asset.find((asset) => asset.sys.id === assetId);
             if (asset && asset.fields && asset.fields.file) {
               const assetUrl = `https:${asset.fields.file.url}`;
-              return `<img src="${assetUrl}" alt="${asset.fields.title || 'Embedded Image'}" style="width: 100%; max-width: 900px; max-height: 600px; object-fit: contain;" />`;
+              return `<img src="${assetUrl}" alt="${asset.fields.title || 'Embedded Image'}" class="portfolio-image" />`;
             }
             return ''; // Return empty string if the asset is not found
           },
@@ -87,7 +89,7 @@ title: Portfolio Post
 
       // Render the portfolio post's content dynamically in the page
       document.getElementById('portfolio-post').innerHTML = `
-        <h2>${portfolioPost.fields.title}</h2>
+        <h2 class="portfolio-subtitle">${portfolioPost.fields.title}</h2>
         <p><strong>Type:</strong> ${portfolioPost.fields.type}</p>
         <div>${documentToHtmlString(portfolioPost.fields.content, options)}</div>
       `;
