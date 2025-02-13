@@ -9,11 +9,11 @@ layout: layouts/base.liquid
 
 Hello! My name is **Blake Munro**, and I am currently a 3rd-year **Computer Programming** student at **Durham College**. I am passionate about technology and software development, and I am proud to be an honor roll student. Throughout my academic journey, I've gained valuable experience in various areas of development, from building websites to working on mainframes, cloud platforms, mobile apps, and even games.
 
-I come from a large family, being one of **8 siblings**, which has taught me the value of teamwork and communication from an early age. Outside of school and work, I have a deep love for **hockey**, and I've enjoyed giving back to the sport as a volunteer coach.
+I’m passionate about staying active and work out regularly to keep a positive mindset and a healthy lifestyle. I also love learning new things—right now, I’m studying French to stay connected with my family, improve my communication skills, and open up new opportunities. When I’m not working out or practicing French, you’ll probably find me caring for my fish. Fishkeeping has become a big part of my life, and I’m dedicated to creating a thriving, diverse aquatic ecosystem.
 
 ### Professional Experience
 
-Currently, I work at **Playdium** as a **zipline operator** and **party host**. My job has provided me with strong customer service skills, as well as the ability to manage and prioritize tasks efficiently while keeping safety at the forefront.
+Currently, I work at **Playdium** as a **zipline operator** and **event host**. My job has provided me with strong customer service skills, as well as the ability to manage and prioritize tasks efficiently while keeping safety at the forefront.
 
 ### Projects and Experience
 
@@ -33,8 +33,8 @@ I have a diverse set of skills and have worked on a variety of projects in diffe
 
 If you’d like to connect, feel free to reach out to me via:
 
-- **Email**: [blakemunro@example.com](mailto:blakemunro@example.com)
-- **Phone**: (123) 456-7890
+- **Email**: [blakemunro17@gmail.com](mailto:blakemunro17@gmail.com)
+- **Phone**: (289) 688-8194
 
 I am always open to discussing new opportunities, projects, or collaborations!
 
