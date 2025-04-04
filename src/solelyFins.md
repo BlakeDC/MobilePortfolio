@@ -46,6 +46,10 @@ SolelyFins is a comprehensive mobile application designed for fishkeeping enthus
 - Cloud backup and synchronization across devices.
 - AI-based recommendations for tank improvements.
 - Community sharing features to compare collections and water parameters.
+- Computer Vison to identify fish through a picture.
+- Task scheduling to push reminder notifications.
+- Daily log in streaks
+- Different types of rewards
 
 ## Conclusion
 SolelyFins is more than just a tracking tool—it's an interactive platform that enhances the fishkeeping experience. With its intuitive features and expanding capabilities, SolelyFins aims to support hobbyists in providing the best care for their aquatic pets.
